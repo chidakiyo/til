@@ -51,9 +51,11 @@ func main() {
 
 							// How can I get the parent object?
 							rctx := graphql.GetResolverContext(ctx)
-							fmt.Println(rctx)
-							// I need Todo object. but How?
-							var todo gqlgen_directive_parent.Todo
+							todo, ok := rctx.ParentObject.(*gqlgen_directive_parent.Todo)
+							if !ok {
+								return  nil, fmt.Errorf("unexpected type %T 🙀", rctx.ParentObject)
+							}
+							fmt.Printf("%#v\n", todo)
 							if todo.User.ID != user.ID {
 								return nil, nil
 							}
