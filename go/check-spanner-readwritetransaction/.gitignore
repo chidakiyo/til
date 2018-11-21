@@ -1,0 +1,5 @@
+.idea/
+
+/testdata/bin/
+/testdata/pkg/
+/testdata/src/**/vendor
