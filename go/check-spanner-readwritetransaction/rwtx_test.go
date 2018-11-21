@@ -1,9 +1,10 @@
 package rwtx_test
 
 import (
+	"testing"
+
 	"github.com/vvakame/til/go/check-spanner-readwritetransaction"
 	"golang.org/x/tools/go/analysis/analysistest"
-	"testing"
 )
 
 func Test(t *testing.T) {
