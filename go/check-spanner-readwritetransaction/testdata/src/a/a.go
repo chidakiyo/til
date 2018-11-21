@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"a/a-sub"
 	"cloud.google.com/go/spanner"
 )
 
@@ -110,6 +111,14 @@ func main() {
 			panic(err)
 		}
 	}
+	{
+		_, err = client.ReadWriteTransaction(ctx, func(ctx context.Context, txn *spanner.ReadWriteTransaction) error { // want `this function never calls \*spanner.ReadWriteTransaction's BufferWrite or Update method`
+			return a_sub.NotUseTx(txn)
+		})
+		if err != nil {
+			panic(err)
+		}
+	}
 
 	// OK!
 	{
@@ -176,6 +185,14 @@ func main() {
 			}
 			f()
 			return nil
+		})
+		if err != nil {
+			panic(err)
+		}
+	}
+	{ // TODO まだ検出できない
+		_, err = client.ReadWriteTransaction(ctx, func(ctx context.Context, txn *spanner.ReadWriteTransaction) error {
+			return a_sub.UseTx(txn)
 		})
 		if err != nil {
 			panic(err)
