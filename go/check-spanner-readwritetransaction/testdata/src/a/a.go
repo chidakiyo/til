@@ -198,4 +198,13 @@ func main() {
 			panic(err)
 		}
 	}
+	{ // TODO まだ検出できない
+		_, err = client.ReadWriteTransaction(ctx, func(ctx context.Context, txn *spanner.ReadWriteTransaction) error {
+			spanner.ReadWriteTransaction.BufferWrite(txn, []*spanner.Mutation{ /* set your mutations */ }) // OK
+			return a_sub.UseTx(txn)
+		})
+		if err != nil {
+			panic(err)
+		}
+	}
 }
